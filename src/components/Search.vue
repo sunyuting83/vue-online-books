@@ -30,7 +30,7 @@
             <span @click="cleanHotKey">清空历史</span>
           </div>
           <div class="row row-wrap" style="margin-top: 0.6rem;padding: 0 0.5rem">
-            <div v-for="(item,i) in searchL" :key="i" class="col hotkey" @click="getHotKey(item)">{{item}}</div>
+            <div v-for="(item,i) in searchL" :key="i" class="col col-25 hotkey" @click="getHotKey(item)">{{item}}</div>
           </div>
         </div>
       </section>
