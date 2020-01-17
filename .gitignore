@@ -17,3 +17,5 @@ selenium-debug.log
 *.njsproj
 *.sln
 新建文档.txt
+yarn.lock
+package-lock.json

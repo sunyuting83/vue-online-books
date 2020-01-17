@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import Swiper from 'swiper'; 
-import 'swiper/css/swiper.min.css';
+import Swiper from 'swiper';
 export default {
   name: 'Slider',
   props: ['sliderList'],
@@ -35,5 +34,7 @@ export default {
   }
 }
 </script>
-
+<style>
+@import url('https://unpkg.com/swiper/css/swiper.min.css');
+</style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
