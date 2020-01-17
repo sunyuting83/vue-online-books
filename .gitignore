@@ -19,3 +19,4 @@ selenium-debug.log
 新建文档.txt
 yarn.lock
 package-lock.json
+/test/

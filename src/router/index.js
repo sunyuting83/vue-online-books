@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index/Index'
 import Trophy from '@/components/Trophy/Trophy'
@@ -15,7 +15,7 @@ const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-Vue.use(Router)
+// Vue.use(Router)
 
 export default new Router({
   routes: [
