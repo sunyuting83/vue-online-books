@@ -31,7 +31,7 @@
 * 跨域使用[https://gitee.com/netnr/proxy/](https://gitee.com/netnr/proxy/)解决
 
 ## 已知问题
-* 纯前端导致打包后JS过大，可以使用koa做成后端取数据，会极大缩小打包后文件
+* 纯前端导致打包后JS过大，可以使用koa做成后端取数据，会极大缩小打包后文件 [后端地址](https://gitee.com/openall/ts-online-books-api)
 * 可以参考我另一个开源项目 [https://gitee.com/mirrors/adb-memory-monitor](https://gitee.com/mirrors/adb-memory-monitor) public/server
 * iPad下字体大小样式问题
 * 时间不够用了，先这样
