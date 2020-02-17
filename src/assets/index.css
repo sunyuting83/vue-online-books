@@ -1166,10 +1166,16 @@ div.inner ul.list li a.active>em::after {
 }
 
 .menu-list .menu-head {
-  position: fixed;
   text-align: center;
   width: 80%;
-  background: rgb(210, 210, 210)
+  background: rgb(210, 210, 210);
+  z-index: 99999;
+}
+.menu-list.active .menu-head{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
 }
 
 .menu-list .menu-head .fa {
@@ -1331,6 +1337,9 @@ div.inner ul.list li a.active>em::after {
 .thisHeader {
   z-index: 999;
   position: fixed;
+  top:0;
+  left: 0;
+  right: 0
 }
 
 .listitle {
