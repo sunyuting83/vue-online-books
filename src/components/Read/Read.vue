@@ -48,7 +48,9 @@
       :night-mode="night"
       :book-id="bookid"
       :page-id="bookthis"
-      :get-data="menuGetData">
+      :get-data="menuGetData"
+      :this-sort="sort"
+      :set-sorts="setSorts">
     </Menu>
   </div>
   <Loading v-else :page-status="status" :get-data="getData"></Loading>
@@ -59,7 +61,6 @@ import Config from '@/helper/config'
 import Storage from '@/helper/storageTTL'
 import JRoll from 'jroll'
 import '@/helper/jroll-pulldown/jroll-pulldown.1.0.0.min'
-import VueInfinite2 from 'jroll-vue-infinite2'
 
 import Loading from '@/components/public/Loading'
 import Header from '@/components/Read/Header'
@@ -101,7 +102,9 @@ export default {
       lastpage: 0,
       bookthis: 0,
       prevbook: 0,
-      listparams: {}
+      listparams: {},
+      sort: true,
+      loading: true
     }
   },
   created() {
@@ -149,17 +152,33 @@ export default {
       this.nav = data.nav
       this.title = this.list[this.bookthis].title
       document.title = `${this.title}-${Config.GlobalTitle}`
+
+      const sort = sessionStorage.getItem(`book.sort:${this.bookid}`)
+      if(sort) {
+        if(sort == 'true') {
+          this.sort = true
+          this.list = this.list.sort((a, b) => a.sort - b.sort)
+        }else {
+          this.sort = false
+          this.list = this.list.sort((a, b) => b.sort - a.sort)
+        }
+      }else {
+        this.sort = true
+      }
     },
     async pushData(type = '') {
       this.title = this.list[this.bookthis].title
       document.title = `${this.title}-${Config.GlobalTitle}`
+      this.loading = false
       const data = await Storage(this.params)
       if(type === 'push') {
         this.nav = `${this.nav}<br />${data.nav}`
         localStorage.setItem(`book.n:${this.bookid}`, this.bookthis)
+        this.loading = true
       }else {
         this.nav = `${data.nav}<br />${this.nav}`
         localStorage.setItem(`book.p:${this.bookid}`, this.prevbook)
+        this.loading = true
       }
     },
     menuGetData(index=0,id=0) {
@@ -185,7 +204,7 @@ export default {
       }
     },
     back() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     },
     prevPage() {
       if(this.current > 0) {
@@ -193,7 +212,12 @@ export default {
         this.makeWidth()
       }else {
         if(this.prevbook >= 1) {
-          const next = this.prevbook - 1
+          let next = this.prevbook
+          if(this.sort) {
+            next = next - 1
+          }else {
+            next = next + 1
+          }
           this.bookthis = next
           const nextid = this.list[next].id
           this.prevbook = next
@@ -227,7 +251,12 @@ export default {
       }else {
         // const book = 700
         if(this.bookthis <= this.lastpage) {
-          const next = this.bookthis + 1
+          let next = this.bookthis
+          if(this.sort) {
+            next = next + 1
+          }else{
+            next = next - 1
+          }
           this.bookthis = next
           const nextid = this.list[next].id
           this.prevbook = this.bookthis
@@ -281,6 +310,10 @@ export default {
       this.openmenu = !this.openmenu
       this.open = !this.open
     },
+    setSorts(sort) {
+      this.sort = sort
+      sessionStorage.setItem(`book.sort:${this.bookid}`, sort)
+    },
     xOry() {
       this.xory = !this.xory
       this.open = !this.open
@@ -329,27 +362,39 @@ export default {
       this.page = Math.ceil(this.offleft / this.width)
       // console.log(this.page)
     },
-    scrollBottom: function (page, success,error) {
+    scrollBottom: function (page, success) {
       const height = this.$refs.myJRoll.jroll._s.endY
       // console.log(page++)
       // console.log(this.$refs.myJRoll.jroll._s.endY)
       if(this.bookthis <= this.lastpage) {
         if(height < -2000) {
-          const next = this.bookthis + 1
-          this.bookthis = next
-          const nextid = this.list[next].id
-          // console.log(nextid)
-          this.$router.replace({path: `/read/${this.bookid}/${nextid}`})
-          this.addPage('push')
+          if(this.loading) {
+            let next = this.bookthis
+            if(this.sort) {
+              next = next + 1
+            }else {
+              next = next - 1
+            }
+            this.bookthis = next
+            const nextid = this.list[next].id
+            // console.log(nextid)
+            this.$router.replace({path: `/read/${this.bookid}/${nextid}`})
+            this.addPage('push')
           success()
+          }
         }
       }
     },
-    pulldown(success, error) {
+    pulldown(success) {
       // console.log(this.prevbook)
       if(this.prevbook > 0) {
         // console.log(this.bookthis)
-        const next = this.prevbook - 1
+        let next = this.prevbook
+        if(this.sort) {
+          next = next - 1
+        }else {
+          next = next + 1
+        }
         this.prevbook = next
         const nextid = this.list[next].id
         // console.log(nextid)

@@ -35,6 +35,6 @@ export default {
 }
 </script>
 <style>
-@import url('https://unpkg.com/swiper/css/swiper.min.css');
+@import url('https://cdn.staticfile.org/Swiper/4.5.1/css/swiper.min.css');
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

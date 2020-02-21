@@ -4,7 +4,7 @@
       <div class="item-header">
         <div class="back" @click="openFun"><i class="fa fa-angle-left"></i></div>
         <div class="item-nav"></div>
-        <div class="search" @click="setSort">
+        <div class="search" @click="setSort(); setSorts(sort)">
           <i class="fa" :class="sort?'fa-sort-amount-asc':'fa-sort-amount-desc'"></i>
         </div>
       </div>
@@ -27,12 +27,14 @@ export default {
     'menuList',
     'pageId',
     'bookId',
-    'getData'
+    'getData',
+    'thisSort',
+    'setSorts'
     ],
   data() {
     return {
       list: this.menuList,
-      sort: true
+      sort: this.thisSort
     }
   },
   methods: {
