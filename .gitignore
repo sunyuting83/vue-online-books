@@ -20,3 +20,4 @@ selenium-debug.log
 yarn.lock
 package-lock.json
 /test/
+.yarnrc
