@@ -11,7 +11,7 @@
     </header>
     <div>
       <ul class="row" v-for="(item,index) in list" :key="index" @click="getData(index,item.id)">
-        <li class="col listitle" :style="pageId === index? 'color:#842424':null">{{item.title}}</li>
+        <li class="col listitle" :style="thisid === index? 'color:#842424':null">{{item.title}}</li>
       </ul>
     </div>
   </div>
@@ -34,7 +34,8 @@ export default {
   data() {
     return {
       list: this.menuList,
-      sort: this.thisSort
+      sort: this.thisSort,
+      thisid: 0
     }
   },
   methods: {
@@ -45,6 +46,24 @@ export default {
         this.list.sort((a, b) => b.sort - a.sort)
       }else {
         this.list.sort((a, b) => a.sort - b.sort)
+      }
+    }
+  },
+  watch:{
+    thisSort(v,o){
+      if(this.sort) {
+        this.thisid = this.pageId
+      }else{
+        this.thisid = this.menuList.length - 1 - this.pageId
+      }
+    },
+    pageId(v,o) {
+      if(v !== o) {
+        if(this.sort) {
+          this.thisid = this.pageId
+        }else{
+          this.thisid = this.menuList.length - 1 - this.pageId
+        }
       }
     }
   }

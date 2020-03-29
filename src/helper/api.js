@@ -308,7 +308,7 @@ const BookJson = (data = '') => {
     if(lsa) {
       const title = $(lsa).text()
       const id = makeLastId($(lsa).attr('href'))
-      console.log(id)
+      // console.log(id)
       if(id) {
         json.list = [...json.list, {
           id: id,

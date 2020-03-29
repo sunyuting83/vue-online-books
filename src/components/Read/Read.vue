@@ -122,6 +122,8 @@ export default {
       this.getSet()
       this.list = list
       this.lastpage = list.length - 1
+      if(this.bookthis == this.lastpage) this.sort = true
+      sessionStorage.setItem(`book.sort:${this.bookid}`, 'true')
       this.getData()
     }else {
       this.getList()
@@ -182,10 +184,12 @@ export default {
       }
     },
     menuGetData(index=0,id=0) {
+      this.title = this.list[index].title
+      document.title = `${this.title}-${Config.GlobalTitle}`
       this.bookthis = index
       this.prevbook = index
       this.status = 3
-        this.params = {
+      this.params = {
         url: Config.ReadUrl(this.bookid,id),
         page: 'book',
         key: 'book',
@@ -195,6 +199,10 @@ export default {
         }
       }
       this.getData()
+      let bis = this.bookthis
+      if(!this.sort) bis = this.list.length - 1 - index
+      localStorage.setItem(`book.n:${this.bookid}`, bis)
+      localStorage.setItem(`book.p:${this.bookid}`, this.prevbook)
       this.openmenu = !this.openmenu
       this.open = false
       if(this.xory) {
@@ -211,7 +219,7 @@ export default {
         this.current = this.current - 1
         this.makeWidth()
       }else {
-        if(this.prevbook >= 1) {
+        if(this.prevbook >= 1 && this.prevPage !== this.lastpage) {
           let next = this.prevbook
           if(this.sort) {
             next = next - 1
@@ -370,23 +378,41 @@ export default {
         if(height < -2000) {
           if(this.loading) {
             let next = this.bookthis
+            // console.log(next,this.lastpage)
             if(this.sort) {
-              next = next + 1
+              if(next !== this.lastpage) {
+                next = next + 1
+                this.bookthis = next
+                const nextid = this.list[next].id
+                this.$router.replace({path: `/read/${this.bookid}/${nextid}`})
+                this.addPage('push')
+              }else {
+                this.loading = false
+                success()
+                this.$refs.myJRoll.jroll.scroller.querySelector('.jroll-infinite-tip').style.display = 'none'
+              }
             }else {
-              next = next - 1
+              const n = this.lastpage - this.bookthis
+              const bookthis = localStorage.setItem(`book.n:${this.bookid}`, n)
+              if(next !== 0) {
+                next = next - 1
+                this.bookthis = next
+                const nextid = this.list[next].id
+                this.$router.replace({path: `/read/${this.bookid}/${nextid}`})
+                this.addPage('push')
+              }else{
+                this.loading = false
+                success()
+                this.$refs.myJRoll.jroll.scroller.querySelector('.jroll-infinite-tip').style.display = 'none'
+              }
             }
-            this.bookthis = next
-            const nextid = this.list[next].id
-            // console.log(nextid)
-            this.$router.replace({path: `/read/${this.bookid}/${nextid}`})
-            this.addPage('push')
-          success()
+            success()
           }
         }
       }
     },
     pulldown(success) {
-      // console.log(this.prevbook)
+      // console.log(this.prevbook,this.sort)
       if(this.prevbook > 0) {
         // console.log(this.bookthis)
         let next = this.prevbook
