@@ -15,6 +15,7 @@
         class="row" 
         v-for="(item,index) in list" 
         :key="index" 
+        @mouseover.native="readBook(index)"
         :to="'/read/'+bookId+'/'+item.id">
         <li class="col listitle">{{item.title}}</li>
       </router-link>
@@ -46,6 +47,14 @@ export default {
         this.list.sort((a, b) => b.sort - a.sort)
       }else {
         this.list.sort((a, b) => a.sort - b.sort)
+      }
+    },
+    readBook(index) {
+      sessionStorage.setItem('readbook', JSON.stringify(this.list))
+      if(this.cache) {
+        localStorage.setItem(`book.n:${this.id}`, index)
+      }else {
+        localStorage.setItem(`book.n:${this.id}`, index)
       }
     }
   },
