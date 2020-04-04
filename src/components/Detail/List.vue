@@ -48,13 +48,15 @@ export default {
       }else {
         this.list.sort((a, b) => a.sort - b.sort)
       }
+      sessionStorage.setItem(`book.sort:${this.id}`, this.sort)
     },
     readBook(index) {
       sessionStorage.setItem('readbook', JSON.stringify(this.list))
-      if(this.cache) {
+      if(this.sort) {
         localStorage.setItem(`book.n:${this.id}`, index)
       }else {
-        localStorage.setItem(`book.n:${this.id}`, index)
+        const s = this.list.length - 1 - index
+        localStorage.setItem(`book.n:${this.id}`, s)
       }
     }
   },

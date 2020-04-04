@@ -152,36 +152,41 @@ export default {
       // console.log(data)
       this.status = data.status
       this.nav = data.nav
-      this.title = this.list[this.bookthis].title
-      document.title = `${this.title}-${Config.GlobalTitle}`
 
       const sort = sessionStorage.getItem(`book.sort:${this.bookid}`)
       if(sort) {
         if(sort == 'true') {
           this.sort = true
           this.list = this.list.sort((a, b) => a.sort - b.sort)
+          this.title = this.list[this.bookthis].title
         }else {
           this.sort = false
           this.list = this.list.sort((a, b) => b.sort - a.sort)
+          const si = this.lastpage - this.bookthis
+          this.title = this.list[si].title
         }
       }else {
         this.sort = true
+        this.title = this.list[this.bookthis].title
       }
+      
+      document.title = `${this.title}-${Config.GlobalTitle}`
     },
     async pushData(type = '') {
-      this.title = this.list[this.bookthis].title
-      document.title = `${this.title}-${Config.GlobalTitle}`
       this.loading = false
       const data = await Storage(this.params)
       if(type === 'push') {
         this.nav = `${this.nav}<br />${data.nav}`
         localStorage.setItem(`book.n:${this.bookid}`, this.bookthis)
         this.loading = true
+        this.title = this.list[this.bookthis].title
       }else {
         this.nav = `${data.nav}<br />${this.nav}`
         localStorage.setItem(`book.p:${this.bookid}`, this.prevbook)
         this.loading = true
+        this.title = this.list[this.prevbook].title
       }
+      document.title = `${this.title}-${Config.GlobalTitle}`
     },
     menuGetData(index=0,id=0) {
       this.title = this.list[index].title
