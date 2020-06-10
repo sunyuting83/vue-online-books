@@ -19,5 +19,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
- dist.zip
- yarn.lock
+dist.zip
+yarn.lock
