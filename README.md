@@ -5,6 +5,12 @@
 * 基于Vue + cheerio
 * 技术练习，切勿用于商业用途，如发生纠纷与作者无关
 
+## 更新
+* 更新vue-cli to 4
+* 由于源站屏蔽代理层访问，改api接口到cf worker。原api源码在api.js.bak
+* [cf worker源码](https://github.com/sunyuting83/online-books-workers)
+* 从releases下载最新版本更新即可。
+
 ![01.jpg](https://i.loli.net/2019/11/12/pDedG2zNrn8AfoT.jpg)
 ![02.jpg](https://i.loli.net/2019/11/12/SyF1c5qd9MEK8lD.jpg)
 ![03.jpg](https://i.loli.net/2019/11/12/MXL25wHQbgf34xo.jpg)
