@@ -76,7 +76,7 @@ const IndexJson = (data = '') => {
         const first = $(element).children('div.text')
         const first_title = $(first).children('strong').children('a').text()
         const first_id = makeBookId($(first).children('strong').children('a').attr('href'))
-        const first_cover = makeImgUrl(first_id)
+        // const first_cover = makeImgUrl(first_id)
         const writer = $(first).children('p').text().split(' ')[1].split(':')[1]
         slider = {
           ...slider,
@@ -452,8 +452,8 @@ const makeLastId = (url = '') => {
   return url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'))
 }
 
-const Img2Base64 = (url = '', bookid = 0) => {
-  return new Promise((resolve, reject) => {
+const Img2Base64 = (url = '') => {
+  return new Promise((resolve) => {
     var newImg = new Image()
     newImg.src = `${Config.CROSUrl}${url}`
     // console.log(newImg.src)
