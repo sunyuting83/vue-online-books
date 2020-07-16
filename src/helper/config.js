@@ -2,6 +2,16 @@ const CROSUrl = 'https://cors.zme.ink/'
 const RootUrl = 'https://newapp.nds9.workers.dev/api/'
 const IndexUrl = `${RootUrl}index`
 const Category = `${RootUrl}category`
+/**
+ * 
+http://www.xbiquge.la/
+http://www.biqu6.com/
+http://www.biqu.ge/
+https://www.xiaoshuojie.com/
+https://www.biqugeii.com/
+http://www.biquger.com/
+https://www.xsbiquge.net/
+ */
 const TrophyUrl = (id = '',page = '') => {
   return `${RootUrl}trophy?id=${id}&page=${page}`
 }
